@@ -23,12 +23,13 @@ export default {
   external: (p) => {
     const deps = [
       '@tfinjs/api',
-      '@tfinjs/api/utils',
+      '@tfinjs/api',
       '@tfinjs/dependency-graph',
       'assert',
       'chalk',
       'commander',
       'figures',
+      'find-up',
       'fs',
       'lodash/fromPairs',
       'lodash/intersection',

@@ -184,7 +184,7 @@ class Resource {
       __tfinjsDeleteProvisioner__: new Provisioner('local-exec', {
         when: 'destroy',
         command:
-          "require('@tfinjs/api/utils').saveDeploymentStatus('${path.root}', 'DESTROYED')",
+          "require('@tfinjs/api').utils.saveDeploymentStatus('${path.root}', 'DESTROYED')",
         interpreter: ['node', '-e'],
       }),
     };
@@ -401,7 +401,7 @@ class Resource {
         program: [
           'node',
           '-e',
-          `require('@tfinjs/api/utils').saveDeploymentStatus('\${path.root}', '${this.versionedName()}')`,
+          `require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '${this.versionedName()}')`,
         ],
       },
     )}}`;

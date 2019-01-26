@@ -1,11 +1,12 @@
 /* global __REAL_MODULE__ */
 import 'source-map-support/register';
-import { requiredParam } from '@tfinjs/api/utils';
+import { requiredParam } from '@tfinjs/api';
 import commander from 'commander';
-import { resolve, isAbsolute } from 'path';
+import { resolve, isAbsolute, dirname } from 'path';
 import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 import MemoryFS from 'memory-fs';
+import findUp from 'find-up';
 import { version } from '../../package.json';
 import build from '../build';
 import getDeploymentSchema from '../getDeploymentSchema';
@@ -13,8 +14,6 @@ import prettyPrint from '../print/prettyPrint';
 // import { readFileSync } from 'fs';
 
 const fs = new MemoryFS();
-
-console.log(123);
 
 const requireFromString = (src, filename) => {
   /* eslint-disable no-underscore-dangle */
@@ -43,7 +42,12 @@ commander
   .option('-o --output <outputFolder>', 'output path', parseCliInputPath)
   .action((entry, { output: outputFolderPath = requiredParam('output') }) => {
     const entryFile = parseCliInputPath(entry);
+    const context = dirname(
+      findUp.sync('package.json', { cwd: dirname(entryFile) }),
+    );
+    const contextNodeModules = resolve(context, 'node_modules');
     const compiler = webpack({
+      context,
       entry: entryFile,
       devtool: 'inline-source-map',
       output: {
@@ -56,6 +60,9 @@ commander
       node: false,
       externals: nodeExternals(),
       mode: 'production',
+      resolve: {
+        modules: [contextNodeModules, 'node_modules'],
+      },
     });
     compiler.outputFileSystem = fs;
     compiler.run(async (err, stats) => {
@@ -86,11 +93,22 @@ commander
       );
 
       const content = fs.readFileSync('/index.js');
-      const contentWithSourceMapSupport = `require('source-map-support').install();\n${content}`;
-      const project = requireFromString(contentWithSourceMapSupport, entryFile);
-      await build(project, { outputFolderPath });
-      const schema = getDeploymentSchema(project, fs);
-      console.log(prettyPrint(schema, outputFolderPath));
+      const contentWithSourceMapSupport = [
+        `module.paths.unshift('${contextNodeModules}');`,
+        "require('source-map-support').install();",
+        content,
+      ].join('\n');
+      try {
+        const project = requireFromString(
+          contentWithSourceMapSupport,
+          entryFile,
+        );
+        await build(project, { outputFolderPath });
+        const schema = getDeploymentSchema(project, fs);
+        console.log(prettyPrint(schema, outputFolderPath));
+      } catch (evalErr) {
+        console.log(evalErr.stack);
+      }
     });
   });
 

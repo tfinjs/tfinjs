@@ -14,7 +14,7 @@ data "external" "save_latest_deploy" {
   program = [
     "node",
     "-e",
-    "require('@tfinjs/api/utils').saveDeploymentStatus('${path.root}', 'tijpetshopjr2h4y')",
+    "require('@tfinjs/api').utils.saveDeploymentStatus('${path.root}', 'tijpetshopjr2h4y')",
   ]
 }
 
@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "terraform_state_prod" {
   bucket = "some-backend-bucket"
 
   provisioner "local-exec" {
-    command = "require('@tfinjs/api/utils').saveDeploymentStatus('${path.root}', 'DESTROYED')"
+    command = "require('@tfinjs/api').utils.saveDeploymentStatus('${path.root}', 'DESTROYED')"
 
     interpreter = [
       "node",

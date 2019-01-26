@@ -6,8 +6,8 @@ import {
   Project,
   Namespace,
   DeploymentConfig,
+  providerUris,
 } from '@tfinjs/api';
-import awsProviderUri from '@tfinjs/api/uris/aws';
 import LambdaResource from '@tfinjs/aws-lambda';
 import packager from '@tfinjs/aws-lambda-packager';
 import { config } from 'dotenv';
@@ -31,7 +31,7 @@ const lambdaProvider = new Provider(
       role_arn: `arn:aws:iam::${awsAccoundId}:role/${awsRole}`,
     },
   },
-  awsProviderUri(awsAccoundId, lambdaRegion),
+  providerUris.aws(awsAccoundId, lambdaRegion),
 );
 
 const backend = new Backend('s3', {
@@ -53,7 +53,7 @@ const backend = new Backend('s3', {
         role_arn: `arn:aws:iam::${awsAccoundId}:role/${awsRole}`,
       },
     },
-    awsProviderUri(awsAccoundId, backendBucketRegion),
+    providerUris.aws(awsAccoundId, backendBucketRegion),
   ),
   create: (deploymentConfig) =>
     new Resource(deploymentConfig, 'aws_s3_bucket', 'terraform_state_prod', {

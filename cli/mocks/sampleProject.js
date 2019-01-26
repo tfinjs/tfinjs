@@ -6,8 +6,8 @@ import {
   Namespace,
   DeploymentConfig,
   versionedName,
+  providerUris,
 } from '@tfinjs/api';
-import awsProviderUri from '@tfinjs/api/uris/aws';
 import { resolve } from 'path';
 
 const backendBucketName = 'some-backend-bucket';
@@ -33,7 +33,7 @@ const backend = new Backend('s3', {
         role_arn: `arn:aws:iam::${awsAccoundId}:role/DeploymentRole`,
       },
     },
-    awsProviderUri(awsAccoundId, backendBucketRegion),
+    providerUris.aws(awsAccoundId, backendBucketRegion),
   ),
   create: (deploymentConfig) =>
     new Resource(deploymentConfig, 'aws_s3_bucket', 'terraform_state_prod', {
@@ -60,7 +60,7 @@ const staticConfig = new DeploymentConfig(namespace, {
         role_arn: `arn:aws:iam::${awsAccoundId}:role/DeploymentRole`,
       },
     },
-    awsProviderUri(awsAccoundId, 'eu-north-1'),
+    providerUris.aws(awsAccoundId, 'eu-north-1'),
   ),
 });
 

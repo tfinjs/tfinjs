@@ -32,7 +32,6 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "babel-loader": "^8.0.4",
     "docma": "^3.1.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -49,5 +48,11 @@
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0"
+  },
+  "dependencies": {
+    "@tfinjs/api": "file:api",
+    "@tfinjs/aws-lambda": "file:./aws-lambda",
+    "@tfinjs/aws-lambda-packager": "file:./aws-lambda-packager",
+    "@tfinjs/cli": "file:./cli"
   }
 }

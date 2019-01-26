@@ -22,7 +22,7 @@ data "external" "save_latest_deploy" {
   program = [
     "node",
     "-e",
-    "require('@tfinjs/api/utils').saveDeploymentStatus('${path.root}', 'tijpetshop19qdr42')",
+    "require('@tfinjs/api').utils.saveDeploymentStatus('${path.root}', 'tijpetshop19qdr42')",
   ]
 }
 
@@ -31,7 +31,7 @@ resource "aws_dynamodb_table" "customers" {
   name     = "tijpetshop19qdr42"
 
   provisioner "local-exec" {
-    command = "require('@tfinjs/api/utils').saveDeploymentStatus('${path.root}', 'DESTROYED')"
+    command = "require('@tfinjs/api').utils.saveDeploymentStatus('${path.root}', 'DESTROYED')"
 
     interpreter = [
       "node",

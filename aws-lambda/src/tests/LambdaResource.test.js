@@ -7,8 +7,8 @@ import {
   Project,
   Namespace,
   DeploymentConfig,
+  providerUris,
 } from '@tfinjs/api';
-import awsProviderUri from '@tfinjs/api/uris/aws';
 import packager from '@tfinjs/aws-lambda-packager';
 import LambdaResource from '..';
 
@@ -36,7 +36,7 @@ test('index', async () => {
           role_arn: `arn:aws:iam::${awsAccoundId}:role/DeploymentRole`,
         },
       },
-      awsProviderUri(awsAccoundId, backendBucketRegion),
+      providerUris.aws(awsAccoundId, backendBucketRegion),
     ),
     create: (deploymentConfig) =>
       new Resource(deploymentConfig, 'aws_s3_bucket', 'terraform_state_prod', {
