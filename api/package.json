@@ -1,0 +1,30 @@
+{
+  "name": "@tfinjs/api",
+  "version": "0.1.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c",
+    "jsdocs": "jsdoc -t ./node_modules/minami --recurse --destination ./jsdocs --readme ./README.md src",
+    "docs": "docma && cp ./assets/favicon.ico ./docs",
+    "docs:preview": "yarn run docs && docma serve",
+    "prepublishOnly": "yarn run build",
+    "commit": "git add . && git commit -m \"wip\" && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfinjs/api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tfinjs/api/issues"
+  },
+  "homepage": "https://tfinjs.com",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1"
+  }
+}

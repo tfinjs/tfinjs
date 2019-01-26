@@ -1,0 +1,22 @@
+
+
+[32m[1mRun the following to deploy[22m[39m
+    
+# level 0:
+[40m[32m[39m[49m
+[40m[32mcd [1m/c[22m && tf init && tf apply -auto-approve[39m[49m &&
+[40m[32m[39m[49m
+[40m[32mcd [1m/d[22m && tf init && tf apply -auto-approve[39m[49m &&
+[40m[32m[39m[49m
+[40m[32mcd [1m/e[22m && tf init && tf apply -auto-approve[39m[49m
+
+
+# level 1:
+[40m[32m[39m[49m
+[40m[32mcd [1m/b[22m && tf init && tf apply -auto-approve[39m[49m
+
+
+# level 2:
+[40m[32m[39m[49m
+[40m[32mcd [1m/a[22m && tf init && tf apply -auto-approve[39m[49m
+  

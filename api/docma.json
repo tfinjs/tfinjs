@@ -1,0 +1,99 @@
+{
+  "src": [
+    "./src/**/*.js",
+    {
+      "readme": "./README.md"
+    },
+    {
+      "examples": "./EXAMPLES.md"
+    },
+    {
+      "guide": "./GUIDE.md"
+    }
+  ],
+  "assets": {
+    "/": "./assets"
+  },
+  "dest": "./docs",
+  "app": {
+    "title": "tfinjs",
+    "entrance": "content:readme",
+    "base": "/",
+    "favicon": "./assets/favicon.ico"
+  },
+  "jsdoc": {
+    "recurse": true
+  },
+  "template": {
+    "path": "zebra",
+    "options": {
+      "title": {
+        "label": "tfinjs",
+        "href": "/"
+      },
+      "logo": {
+        "dark": "assets/logo-clean.png"
+      },
+      "navbar": {
+        "enabled": true,
+        "menu": [
+          {
+            "label": "Home",
+            "iconClass": "fas fa-home",
+            "href": "/"
+          },
+          {
+            "label": "jsdocs",
+            "iconClass": "fas fa-book",
+            "href": "./?api"
+          },
+          {
+            "label": "Guide",
+            "iconClass": "fas fa-info-circle",
+            "href": "?content=guide"
+          },
+          {
+            "label": "Examples",
+            "iconClass": "fas fa-mouse-pointer",
+            "href": "?content=examples"
+          },
+          {
+            "label": "GitHub",
+            "iconClass": "fab fa-github",
+            "items": [
+              {
+                "label": "API",
+                "href": "https://github.com/tfinjs/api"
+              },
+              {
+                "separator": true
+              },
+              {
+                "label": "CLI",
+                "href": "https://github.com/tfinjs/cli"
+              },
+              {
+                "separator": true
+              },
+              {
+                "label": "AWS lambda resource",
+                "href": "https://github.com/tfinjs/aws-lambda"
+              },
+              {
+                "separator": true
+              },
+              {
+                "label": "AWS lambda packager",
+                "href": "https://github.com/tfinjs/aws-lambda-packager"
+              }
+            ]
+          }
+        ]
+      },
+      "sidebar": {
+        "enabled": true,
+        "outline": "tree"
+      }
+    }
+  }
+}

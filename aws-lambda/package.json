@@ -1,0 +1,31 @@
+{
+  "name": "@tfinjs/aws-lambda",
+  "version": "0.1.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c",
+    "jsdocs": "jsdoc -t ./node_modules/minami --recurse --destination ./jsdocs --readme ./README.md src",
+    "docs": "docma && cp ./assets/favicon.ico ./docs",
+    "docs:preview": "yarn run docs && docma serve",
+    "start": "node dist/tfinjs.js",
+    "prepublishOnly": "yarn run build",
+    "commit": "git add . && git commit -m \"wip\" && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfinjs/aws-lambda.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tfinjs/aws-lambda/issues"
+  },
+  "homepage": "https://github.com/tfinjs/aws-lambda#readme",
+  "dependencies": {
+    "@tfinjs/api": "file:../api",
+    "fs-extra": "^7.0.1"
+  }
+}

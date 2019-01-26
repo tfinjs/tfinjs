@@ -1,0 +1,29 @@
+{
+  "name": "@tfinjs/demos-simple-resources",
+  "version": "0.1.1",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "tfinjs": "tfinjs",
+    "build": "tfinjs build ./src/index.js -o ./dist",
+    "commit": "git add . && git commit -m \"wip\" && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricsam/tfinjs-demos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ricsam/tfinjs-demos/issues"
+  },
+  "homepage": "https://pedantic-sammet-e08804.netlify.com/",
+  "dependencies": {
+    "@tfinjs/api": "file:../../api",
+    "@tfinjs/aws-lambda": "file:../../aws-lambda",
+    "@tfinjs/aws-lambda-packager": "file:../../aws-lambda-packager",
+    "@tfinjs/cli": "file:../../cli",
+    "dotenv": "^6.2.0"
+  }
+}

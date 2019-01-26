@@ -1,0 +1,44 @@
+{
+  "name": "@tfinjs/cli",
+  "version": "0.1.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c && node prepend.js && chmod +x ./dist/index.js",
+    "jsdocs": "jsdoc -t ./node_modules/minami --recurse --destination ./jsdocs --readme ./README.md src",
+    "docs": "docma && cp ./assets/favicon.ico ./docs",
+    "docs:preview": "yarn run docs && docma serve",
+    "start": "node dist/index.js",
+    "prepublishOnly": "yarn run build",
+    "commit": "git add . && git commit -m \"wip\" && git push"
+  },
+  "bin": {
+    "tfinjs": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfinjs/cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tfinjs/cli/issues"
+  },
+  "homepage": "https://tfinjs.com",
+  "dependencies": {
+    "@tfinjs/api": "file:../api",
+    "@tfinjs/dependency-graph": "^0.0.2-beta",
+    "chalk": "^2.4.2",
+    "commander": "^2.19.0",
+    "figures": "^2.0.0",
+    "fs-extra": "^7.0.1",
+    "lodash": "^4.17.11",
+    "memory-fs": "^0.4.1",
+    "mkdirp": "^0.5.1",
+    "source-map-support": "^0.5.9",
+    "webpack": "^4.28.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
