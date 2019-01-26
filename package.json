@@ -11,7 +11,8 @@
     "l:install": "lerna bootstrap",
     "l:bump": "lerna version minor --no-git-tag-version",
     "l:build": "lerna run build --ignore @tfinjs/demos-simple-resources --npm-client=yarn",
-    "l:clean": "lerna clean"
+    "l:clean": "lerna clean",
+    "l:commit": "lerna run commit --ignore @tfinjs/demos-simple-resources"
   },
   "repository": {
     "type": "git",
