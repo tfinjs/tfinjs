@@ -26,5 +26,6 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1"
-  }
+  },
+  "gitHead": "5a6549cea59c693d40b0541a72ab2ee6a562d574"
 }

@@ -28,7 +28,7 @@
   },
   "homepage": "https://tfinjs.com",
   "dependencies": {
-    "@tfinjs/api": "file:../api",
+    "@tfinjs/api": "^0.2.0",
     "@tfinjs/dependency-graph": "^0.0.2-beta",
     "chalk": "^2.4.2",
     "commander": "^2.19.0",
@@ -40,5 +40,6 @@
     "source-map-support": "^0.5.9",
     "webpack": "^4.28.2",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
+  "gitHead": "5a6549cea59c693d40b0541a72ab2ee6a562d574"
 }

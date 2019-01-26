@@ -20,10 +20,11 @@
   },
   "homepage": "https://pedantic-sammet-e08804.netlify.com/",
   "dependencies": {
-    "@tfinjs/api": "file:../../api",
-    "@tfinjs/aws-lambda": "file:../../aws-lambda",
-    "@tfinjs/aws-lambda-packager": "file:../../aws-lambda-packager",
-    "@tfinjs/cli": "file:../../cli",
+    "@tfinjs/api": "^0.2.0",
+    "@tfinjs/aws-lambda": "^0.2.0",
+    "@tfinjs/aws-lambda-packager": "^0.2.0",
+    "@tfinjs/cli": "^0.2.0",
     "dotenv": "^6.2.0"
-  }
+  },
+  "gitHead": "5a6549cea59c693d40b0541a72ab2ee6a562d574"
 }
