@@ -9,10 +9,9 @@
     "lerna": "lerna",
     "l:publish": "lerna publish --ignore @tfinjs/demos-simple-resources",
     "l:install": "lerna bootstrap",
-    "l:bump": "lerna version minor --no-git-tag-version",
+    "l:bump": "lerna version minor",
     "l:build": "lerna run build --ignore @tfinjs/demos-simple-resources --npm-client=yarn",
-    "l:clean": "lerna clean",
-    "l:commit": "lerna run commit --ignore @tfinjs/demos-simple-resources"
+    "l:clean": "lerna clean"
   },
   "repository": {
     "type": "git",
