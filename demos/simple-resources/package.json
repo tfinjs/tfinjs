@@ -1,6 +1,6 @@
 {
   "name": "@tfinjs/demos-simple-resources",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -20,10 +20,10 @@
   },
   "homepage": "https://pedantic-sammet-e08804.netlify.com/",
   "dependencies": {
-    "@tfinjs/api": "^0.2.1",
-    "@tfinjs/aws-lambda": "^0.2.1",
-    "@tfinjs/aws-lambda-packager": "^0.2.1",
-    "@tfinjs/cli": "^0.2.1",
+    "@tfinjs/api": "^0.2.2",
+    "@tfinjs/aws-lambda": "^0.2.2",
+    "@tfinjs/aws-lambda-packager": "^0.2.2",
+    "@tfinjs/cli": "^0.2.2",
     "dotenv": "^6.2.0"
   },
   "gitHead": "235adbd040adc229fc89457a79bb59506b58a17d"
