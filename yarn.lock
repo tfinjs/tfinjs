@@ -1110,20 +1110,19 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tfinjs/api@^0.2.1", "@tfinjs/api@file:api":
-  version "0.2.1"
+"@tfinjs/api@^0.2.2", "@tfinjs/api@file:api":
+  version "0.2.2"
   dependencies:
     lodash "^4.17.11"
     mkdirp "^0.5.1"
 
 "@tfinjs/aws-lambda-packager@file:./aws-lambda-packager":
-  version "0.2.1"
+  version "0.2.2"
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     adm-zip "^0.4.13"
     eol "^0.9.1"
     find-up "^3.0.0"
-    fs-extra "^7.0.1"
     lodash "^4.17.11"
     memory-fs "^0.4.1"
     resolve "^1.9.0"
@@ -1131,21 +1130,20 @@
     webpack-node-externals "^1.7.2"
 
 "@tfinjs/aws-lambda@file:./aws-lambda":
-  version "0.2.1"
+  version "0.2.2"
   dependencies:
-    "@tfinjs/api" "^0.2.1"
+    "@tfinjs/api" "^0.2.2"
     mkdirp "^0.5.1"
 
 "@tfinjs/cli@file:./cli":
-  version "0.2.1"
+  version "0.2.2"
   dependencies:
-    "@tfinjs/api" "^0.2.1"
+    "@tfinjs/api" "^0.2.2"
     "@tfinjs/dependency-graph" "^0.0.2-beta"
     chalk "^2.4.2"
     commander "^2.19.0"
     figures "^2.0.0"
     find-up "^3.0.0"
-    fs-extra "^7.0.1"
     lodash "^4.17.11"
     memory-fs "^0.4.1"
     mkdirp "^0.5.1"

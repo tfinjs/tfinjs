@@ -5,8 +5,7 @@
     "api",
     "aws-lambda",
     "aws-lambda-packager",
-    "cli",
-    "demos/*"
+    "cli"
   ],
   "command": {
     "publish": {

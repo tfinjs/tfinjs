@@ -26,5 +26,5 @@
     "@tfinjs/cli": "^0.2.2",
     "dotenv": "^6.2.0"
   },
-  "gitHead": "235adbd040adc229fc89457a79bb59506b58a17d"
+  "gitHead": "e4afc26c96267da76a4d9ea3d07140dede8d510c"
 }

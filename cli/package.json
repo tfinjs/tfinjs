@@ -41,5 +41,5 @@
     "webpack": "^4.28.2",
     "webpack-node-externals": "^1.7.2"
   },
-  "gitHead": "235adbd040adc229fc89457a79bb59506b58a17d"
+  "gitHead": "e4afc26c96267da76a4d9ea3d07140dede8d510c"
 }
