@@ -1,6 +1,6 @@
 {
   "name": "@tfinjs/aws-lambda",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/tfinjs/aws-lambda#readme",
   "dependencies": {
-    "@tfinjs/api": "^0.2.2",
+    "@tfinjs/api": "^0.2.3",
     "mkdirp": "^0.5.1"
   },
   "gitHead": "e4afc26c96267da76a4d9ea3d07140dede8d510c"
