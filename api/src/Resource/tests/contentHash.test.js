@@ -11,11 +11,11 @@ test('circular dependencies', async () => {
     resourceId: 2,
   });
 
-  expect(one.getContentHash()).toBe('1hh5phc');
-  expect(two.getContentHash()).toBe('1h5q195');
+  expect(one.getContentHash()).toMatchSnapshot();
+  expect(two.getContentHash()).toMatchSnapshot();
 
   two.addContentHashSeed('newSeed', () => 123);
-  expect(two.getContentHash()).toBe('3mrkcw');
+  expect(two.getContentHash()).toMatchSnapshot();
   two.removeContentHashSeed('newSeed');
-  expect(two.getContentHash()).toBe('1h5q195');
+  expect(two.getContentHash()).toMatchSnapshot();
 });

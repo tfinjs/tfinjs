@@ -16,6 +16,7 @@ const build = async (project, { outputFolderPath, fs = defaultFsModule }) => {
     fs,
   });
 
+
   /* build */
   const resources = project.getResources();
 
@@ -26,11 +27,13 @@ const build = async (project, { outputFolderPath, fs = defaultFsModule }) => {
     JSON.stringify(schema, null, 2),
   );
 
+
   await Promise.all(
     resources.map(async (resource) => {
       await resource.build();
     }),
   );
+  return schema;
 };
 
 export default build;

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
+import path from 'path';
 
 export default {
   input: 'src/main.js',
@@ -11,6 +12,7 @@ export default {
   plugins: [
     resolve(),
     babel({
+      configFile: path.resolve(__dirname, '../babel.config.js'),
       exclude: 'node_modules/**', // only transpile our source code
     }),
   ],

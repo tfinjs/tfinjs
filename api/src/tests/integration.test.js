@@ -1,4 +1,5 @@
-import { join } from 'path';
+/* eslint-env jest */
+import { Volume, createFsFromVolume } from 'memfs';
 import Project from '../Project';
 import Backend from '../Backend';
 import Provider from '../Provider';
@@ -7,15 +8,14 @@ import Resource from '../Resource';
 import Namespace from '../Namespace';
 import DeploymentConfig from '../DeploymentConfig';
 import { versionedName } from '../helpers';
-import saveProject from './saveProject';
 
-/* eslint-env jest */
+const vol = new Volume();
+const fs = createFsFromVolume(vol);
 
 test('integration', async () => {
   const backendBucketName = 'some-backend-bucket';
   const backendBucketRegion = 'eu-north-1';
   const awsAccoundId = '13371337';
-  const dist = join(__dirname, 'io/integration.test.out');
 
   const backend = new Backend('s3', {
     backendConfig: (name) => ({
@@ -48,7 +48,7 @@ test('integration', async () => {
       }),
   });
 
-  const project = new Project('pet-shop', backend, dist);
+  const project = new Project('pet-shop', backend, '/', fs);
 
   const namespace = new Namespace(project, 'customers');
 
@@ -72,5 +72,6 @@ test('integration', async () => {
     write_capacity: 20,
     hash_key: 'CustomerId',
   });
-  await saveProject(project, join(__dirname, 'io/integration.test.ref'), dist);
+  await project.build();
+  expect(vol.toJSON()).toMatchSnapshot();
 });

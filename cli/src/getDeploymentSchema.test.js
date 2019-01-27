@@ -15,12 +15,12 @@ test('getDeploymentSchema', () => {
       tijpetshopmjubxt: {
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
       },
       tijpetshop19qdr42: {
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers',
-        contentHash: '1o40x0m',
+        contentHash: 'tza2es',
       },
     },
     add: ['tijpetshopmjubxt', 'tijpetshop19qdr42'],
@@ -39,12 +39,12 @@ test('getDeploymentSchema ', () => {
       tijpetshopmjubxt: {
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
       },
       tijpetshop19qdr42: {
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers',
-        contentHash: '1o40x0m',
+        contentHash: 'tza2es',
       },
     },
     add: ['tijpetshopmjubxt', 'tijpetshop19qdr42'],

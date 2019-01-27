@@ -1,5 +1,7 @@
-import { resolve } from 'path';
-import { mkdirpSync } from 'fs-extra';
+import assert from 'assert';
+import { join } from 'path';
+import mkdirp from 'mkdirp';
+import fs from 'fs';
 import {
   versionedName,
   reference,
@@ -20,13 +22,18 @@ class LambdaResource {
       package: packageFunction,
       timeout = 30,
       memorySize = 512,
+      cloudwatch = true,
     },
+    fileSystem = fs,
   ) {
     if (!(deploymentConfig instanceof DeploymentConfig)) {
       throw new Error(
         'Error you have two versions of @tfinjs/api in you node_modules, @tfinjs/aws-lambda is not using the same version as your project',
       );
     }
+
+    this.setFs(fileSystem);
+
     const role = new Resource(deploymentConfig, 'aws_iam_role', name, {
       assume_role_policy: JSON.stringify({
         Version: '2012-10-17',
@@ -56,10 +63,12 @@ class LambdaResource {
     );
 
     zipUpload.addPreBuildHook(async (r) => {
-      const outputFolder = resolve(r.getProject().getDist());
-      mkdirpSync(outputFolder);
+      const outputFolder = join(r.getProject().getDist(), r.versionedName());
+      mkdirp.sync(outputFolder, {
+        fs: this.fs,
+      });
       await packageFunction(
-        resolve(outputFolder, r.versionedName(), relativeZipFilePath),
+        join(outputFolder, relativeZipFilePath),
       );
     });
 
@@ -88,11 +97,80 @@ class LambdaResource {
       },
     );
 
+    if (cloudwatch) {
+      const lambdaCloudwatchGroup = new Resource(
+        deploymentConfig,
+        'aws_cloudwatch_log_group',
+        'lambda_cloudwatch_group',
+        {
+          name: `/aws/lambda/${lambda.versionedName()}`,
+        },
+      );
+      deploymentConfig.getProvider();
+      const prefix = [
+        'arn:aws:logs',
+        '${data.aws_region.current.name}',
+        '${data.aws_caller_identity.current.account_id}',
+        'log-group',
+        `/aws/lambda/${lambda.versionedName()}`,
+      ].join(':');
+      const cloudwatchAttachablePolicy = new Resource(
+        deploymentConfig,
+        'aws_iam_policy',
+        'cloudwatch_attachable_policy',
+        {
+          policy: JSON.stringify(
+            {
+              Version: '2012-10-17',
+              Statement: [
+                {
+                  Action: ['logs:CreateLogStream'],
+                  Effect: 'Allow',
+                  Resource: `${prefix}:*`,
+                },
+                {
+                  Action: ['logs:PutLogEvents'],
+                  Effect: 'Allow',
+                  Resource: `${prefix}:*:*`,
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        },
+        {
+          extraHcl: () => `
+            data "aws_region" "current" {}
+            data "aws_caller_identity" "current" {}
+          `,
+        },
+      );
+    }
+
     return {
       lambda,
       zipUpload,
       role,
     };
+  }
+
+  /**
+   * Sets the filesystem of this project
+   *
+   * @returns {*} fs
+   * @memberof Project
+   */
+  setFs(fileSystem) {
+    assert(
+      fileSystem.writeFileSync
+        && fileSystem.readFileSync
+        && fileSystem.mkdir
+        && fileSystem.stat,
+      'fileSystem must be implemented as the node fs module',
+    );
+
+    this.fs = fileSystem;
   }
 }
 

@@ -7,5 +7,12 @@
     "aws-lambda-packager",
     "cli",
     "demos/*"
-  ]
+  ],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "demos/*"
+      ]
+    }
+  }
 }

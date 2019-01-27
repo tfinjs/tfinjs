@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prettyPrint cyclic 1`] = `
+"
+      [31m[1mWarning, you have circular dependencies![22m[39m
+
+      [31m● tijpetshop1lr7f2m[39m
+    
+Nothing to deploy
+"
+`;
+
+exports[`prettyPrint normal 1`] = `
+"
+
+[32m[1mRun the following to deploy[22m[39m
+    
+# level 0:
+[40m[32m[39m[49m
+[40m[32mcd [1m/tijpetshop1lr7f2m[22m && tf init && tf apply -auto-approve[39m[49m
+    "
+`;
+
+exports[`prettyPrint normal with graph 1`] = `
+"
+
+[32m[1mRun the following to deploy[22m[39m
+    
+# level 0:
+[40m[32m[39m[49m
+[40m[32mcd [1m/c[22m && tf init && tf apply -auto-approve[39m[49m &&
+[40m[32m[39m[49m
+[40m[32mcd [1m/d[22m && tf init && tf apply -auto-approve[39m[49m
+
+
+# level 1:
+[40m[32m[39m[49m
+[40m[32mcd [1m/b[22m && tf init && tf apply -auto-approve[39m[49m
+
+
+# level 2:
+[40m[32m[39m[49m
+[40m[32mcd [1m/a[22m && tf init && tf apply -auto-approve[39m[49m
+    "
+`;
+
+exports[`prettyPrint remove 1`] = `
+"
+
+[32m[1mRun the following to deploy[22m[39m
+    
+# level 0:
+[40m[32m[39m[49m
+[40m[32mcd [1m/tijpetshop1lr7f2m[22m && tf init && tf apply -auto-approve[39m[49m
+    
+
+[31m[1mDelete the following resources[22m[39m
+    [40m[31m[39m[49m
+[40m[31mcd [1m/wefwef[22m && tf init && tf destroy -auto-approve &&[39m[49m
+[40m[31m[39m[49m
+[40m[31mcd [1m/fewfew[22m && tf init && tf destroy -auto-approve[39m[49m
+  "
+`;

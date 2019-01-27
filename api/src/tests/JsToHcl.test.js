@@ -3,48 +3,62 @@ import mkdrip from 'mkdirp';
 import { writeFileSync, readFileSync } from 'fs';
 import JsToHcl, { Provisioner } from '../JsToHcl';
 import hclPrettify from '../statics/hclPrettify';
-import snapshot from '../testUtils/snapshot';
 
 /* eslint-env jest */
 
+const testObject = {
+  glossary: {
+    title: 'example glossary',
+    GlossDiv: {
+      title: 'S',
+      value: 729,
+      repeat: true,
+      GlossList: {
+        GlossEntry: {
+          ID: 'SGML',
+          SortAs: 'SGML',
+          GlossTerm: 'Standard Generalized Markup Language',
+          Acronym: 'SGML',
+          Abbrev: 'ISO 8879:1986',
+          GlossDef: {
+            para:
+              'A meta-markup language, used to create markup languages such as DocBook.',
+            GlossSeeAlso: ['GML', 'XML'],
+          },
+          GlossSee: 'markup',
+        },
+      },
+    },
+  },
+};
+
 test('JsToHcl default', async () => {
-  mkdrip.sync(__dirname, 'io/JsToHcl/default');
-
-  const infile = resolve(__dirname, 'io/JsToHcl/default/in.json');
-  const reffile = resolve(__dirname, 'io/JsToHcl/default/ref.tf');
-  const outfile = resolve(__dirname, 'io/JsToHcl/default/out.tf');
-
-  const js = JSON.parse(readFileSync(infile).toString());
   const jsToHcl = new JsToHcl();
-  const result = jsToHcl.stringify(js);
+  const result = jsToHcl.stringify(testObject);
 
   const prettyResult = await hclPrettify(result);
-  writeFileSync(outfile, prettyResult);
 
-  snapshot(reffile, outfile, false);
+  expect(prettyResult).toMatchSnapshot();
 });
 
 /* add provisioner */
 
 test('JsToHcl with provisioner', async () => {
-  mkdrip.sync(__dirname, 'io/JsToHcl/withProvisioner');
-
-  const reffile = resolve(__dirname, 'io/JsToHcl/withProvisioner/ref.tf');
-  const outfile = resolve(__dirname, 'io/JsToHcl/withProvisioner/out.tf');
 
   const js = {
-    provisioner1: new Provisioner('local-exec', {
-      command: 'echo first',
-    }),
-    provisioner2: new Provisioner('local-exec', {
-      command: 'echo second',
-    }),
+    'provisioner "local-exec"': [
+      {
+        command: 'echo first',
+      },
+      {
+        command: 'echo second',
+      },
+    ],
   };
   const jsToHcl = new JsToHcl();
   const result = jsToHcl.stringify(js);
 
   const prettyResult = await hclPrettify(result);
-  writeFileSync(outfile, prettyResult);
 
-  snapshot(reffile, outfile, false);
+  expect(prettyResult).toMatchSnapshot();
 });

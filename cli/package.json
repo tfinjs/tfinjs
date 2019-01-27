@@ -34,7 +34,6 @@
     "commander": "^2.19.0",
     "figures": "^2.0.0",
     "find-up": "^3.0.0",
-    "fs-extra": "^7.0.1",
     "lodash": "^4.17.11",
     "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",
@@ -42,5 +41,5 @@
     "webpack": "^4.28.2",
     "webpack-node-externals": "^1.7.2"
   },
-  "gitHead": "5a6549cea59c693d40b0541a72ab2ee6a562d574"
+  "gitHead": "235adbd040adc229fc89457a79bb59506b58a17d"
 }

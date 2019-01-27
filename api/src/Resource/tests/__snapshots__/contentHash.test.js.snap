@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`circular dependencies 1`] = `"edafud"`;
+
+exports[`circular dependencies 2`] = `"1kpw0ft"`;
+
+exports[`circular dependencies 3`] = `"vv9cf3"`;
+
+exports[`circular dependencies 4`] = `"1kpw0ft"`;

@@ -1,17 +1,19 @@
 /* eslint-env jest */
+import { Volume, createFsFromVolume } from 'memfs';
 import { resolve } from 'path';
 import awsProviderUri from '../Provider/uris/aws';
 import Provider from '../Provider';
 import Backend from '../Backend';
-import saveProject from './saveProject';
 import Project from '../Project';
 import Namespace from '../Namespace';
 import DeploymentConfig from '../DeploymentConfig';
 import Resource from '../Resource';
 import { reference, versionedName } from '../helpers';
 
+const vol = new Volume();
+const fs = createFsFromVolume(vol);
+
 test('simpleResources', async () => {
-  const dist = resolve(__dirname, 'io/simpleResources.test.out');
   const awsAccoundId = 13371337;
   const awsRegion = 'eu-north-1';
   const backendBucketName = 'terraform-state-prod';
@@ -48,7 +50,7 @@ test('simpleResources', async () => {
       }),
   });
 
-  const project = new Project('pet-shop', backend, dist);
+  const project = new Project('pet-shop', backend, '/', fs);
 
   const provider = new Provider(
     'aws',
@@ -141,5 +143,7 @@ test('simpleResources', async () => {
       policy_arn: reference(cloudwatchPolicy, 'arn'),
     },
   );
-  await saveProject(project, resolve(__dirname, 'io/simpleResources.test.ref'), dist);
+
+  await project.build();
+  expect(vol.toJSON()).toMatchSnapshot();
 });

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import path from 'path';
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
@@ -17,6 +18,7 @@ export default {
       include: ['package.json'],
     }),
     babel({
+      configFile: path.resolve(__dirname, '../babel.config.js'),
       exclude: 'node_modules/**', // only transpile our source code
     }),
   ],

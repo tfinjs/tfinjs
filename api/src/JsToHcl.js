@@ -1,6 +1,32 @@
 import assert from 'assert';
 import requiredParam from './statics/requiredParam';
 
+/* an arrayLike is e.g.
+
+wef {
+  filter {
+    hi = 123
+  }
+  filter {
+    ho = 321
+  }
+}
+
+which is represented by
+
+wef: {
+  filter: [
+    {
+      hi: 123,
+    },
+    {
+      ho: 321,
+    }
+  ],
+},
+
+*/
+
 const isPrimitive = (val) =>
   ['string', 'boolean', 'number'].includes(typeof val);
 
@@ -49,9 +75,7 @@ class JsToHclUtils {
     }
     if (Array.isArray(value)) {
       return `[
-        ${value
-        .map(this.parse)
-        .join(',\n')}
+        ${value.map(this.parse).join(',\n')}
       ]`;
     }
 
@@ -84,27 +108,48 @@ class JsToHclUtils {
     key = requiredParam('key'),
     value = requiredParam('value'),
   ]) => {
+    if (this.isArrayLike(value)) {
+      return this.parseArrayLike(key, value);
+    }
     const parsedValue = this.parse(value);
     if (value instanceof JsToHclUtils) {
       return parsedValue;
     }
     return `${key} = ${parsedValue}`;
   };
+
+  isArrayLike = (value) =>
+    Array.isArray(value) && value.every((val) => typeof val === 'object');
+
+  parseArrayLike = (key, value) =>
+    value.map((val) => `${key} ${this.parse(val)}`);
+
+  getBody(js) {
+    return this.parse(js)
+      .replace(/^[{[]/, '')
+      .replace(/[}\]]$/, '');
+  }
 }
 
-export class Provisioner extends JsToHclUtils {
-  constructor(type, body) {
+export class ArrayLike extends JsToHclUtils {
+  constructor(definition, body) {
     super();
-    assert(typeof type === 'string', 'type must be a string');
+    assert(typeof definition === 'string', 'definition must be a string');
     assert(typeof body === 'object', 'body must be an object');
-    this.type = type;
+    this.definition = definition;
     this.body = body;
   }
 
   stringify() {
-    return `provisioner "${this.type}" ${this.parse(this.body)} `
-      .replace(/^\{/, '')
-      .replace(/\}$/, '');
+    return `${this.definition} { ${this.getBody(this.body)} } `;
+  }
+}
+
+export class Provisioner extends ArrayLike {
+  constructor(type, body) {
+    assert(typeof type === 'string', 'type must be a string');
+    assert(typeof body === 'object', 'body must be an object');
+    super(`provisioner "${type}"`, body);
   }
 }
 

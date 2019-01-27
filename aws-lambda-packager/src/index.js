@@ -4,7 +4,14 @@ import fs from 'fs';
 import { isAbsolute } from 'path';
 import transpileAndGetDependencies from './transpileAndGetDependencies';
 
-const packager = async (entryFilePath, zipFilePath) => {
+const packager = async (entryFilePath, zipFilePath, fileSystem = fs) => {
+  assert(
+    fileSystem.writeFileSync
+    && fileSystem.readFileSync
+    && fileSystem.mkdir
+    && fileSystem.stat,
+    'fileSystem must be implemented as the node fs module',
+  );
   assert(
     typeof entryFilePath === 'string'
       && isAbsolute(entryFilePath)
@@ -35,7 +42,7 @@ const packager = async (entryFilePath, zipFilePath) => {
   dependencies.forEach(
     ({ dependencyFolderPath, dependencyName, packageJsonFilePath }) => {
       packagedPackageJson.dependencies[dependencyName] = JSON.parse(
-        fs.readFileSync(packageJsonFilePath, 'utf8'),
+        fileSystem.readFileSync(packageJsonFilePath, 'utf8'),
       ).version;
       zipFile.addLocalFolder(
         dependencyFolderPath,
@@ -44,7 +51,8 @@ const packager = async (entryFilePath, zipFilePath) => {
     },
   );
   zipFile.addFile('package.json', JSON.stringify(packagedPackageJson, null, 2));
-  zipFile.writeZip(zipFilePath);
+  const buffer = zipFile.toBuffer();
+  fileSystem.writeFileSync(zipFilePath, buffer);
   return { data, dependencies };
 };
 export default packager;

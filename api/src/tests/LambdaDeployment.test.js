@@ -1,4 +1,5 @@
-import { join } from 'path';
+/* eslint-env jest */
+import { Volume, createFsFromVolume } from 'memfs';
 import Provider from '../Provider';
 import Backend from '../Backend';
 import Project from '../Project';
@@ -6,13 +7,13 @@ import Namespace from '../Namespace';
 import DeploymentConfig from '../DeploymentConfig';
 import Resource from '../Resource';
 import { reference, versionedName } from '../helpers';
-import saveProject from './saveProject';
 
 const awsProviderUri = (accountId, region) => `aws/${accountId}/${region}`;
 
-/* eslint-env jest */
+const vol = new Volume();
+const fs = createFsFromVolume(vol);
+
 test('The lambda deployment example test', async () => {
-  const dist = join(__dirname, 'io/LambdaDeployment.test.out');
   const backend = new Backend('s3', {
     backendConfig: (name) => ({
       bucket: 'terraform-state-prod',
@@ -29,7 +30,7 @@ test('The lambda deployment example test', async () => {
   const awsAccoundId = '133713371337';
   const awsRegion = 'eu-north-1';
 
-  const project = new Project('pet-shop', backend, dist);
+  const project = new Project('pet-shop', backend, '/', fs);
 
   const namespace = new Namespace(project, 'services/lambdas/add-pet');
 
@@ -131,9 +132,7 @@ test('The lambda deployment example test', async () => {
     },
   );
 
-  await saveProject(
-    project,
-    join(__dirname, 'io/LambdaDeployment.test.ref'),
-    dist,
-  );
+  await project.build();
+
+  expect(vol.toJSON()).toMatchSnapshot();
 });

@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import { Volume, createFsFromVolume } from 'memfs';
 import Resource from '..';
 import awsProviderUri from '../../Provider/uris/aws';
 import Provider from '../../Provider';
@@ -7,11 +8,13 @@ import Project from '../../Project';
 import Namespace from '../../Namespace';
 import DeploymentConfig from '../../DeploymentConfig';
 
-const dist = resolve(__dirname, 'io/simpleResources.test.out');
 const awsAccoundId = 13371337;
 const awsRegion = 'eu-north-1';
 const backendBucketName = 'terraform-state-prod';
 const backendBucketRegion = 'us-east-1';
+
+const vol = new Volume();
+const fs = createFsFromVolume(vol);
 
 const backend = new Backend('s3', {
   backendConfig: (name) => ({
@@ -44,7 +47,7 @@ const backend = new Backend('s3', {
     }),
 });
 
-export const project = new Project('pet-shop', backend, dist);
+export const project = new Project('pet-shop', backend, '/', fs);
 
 const provider = new Provider(
   'aws',

@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transpileAndGetDependencies 1`] = `
+Array [
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/src/tests/src/node_modules/lodash",
+    "dependencyName": "lodash",
+    "packageJsonFilePath": "aws-lambda-packager/src/tests/src/package.json",
+    "projectFolder": "aws-lambda-packager/src/tests/src",
+    "yarnLockFilePath": "aws-lambda-packager/src/tests/src/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/source-map",
+    "dependencyName": "source-map",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/debug",
+    "dependencyName": "debug",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/resolve",
+    "dependencyName": "resolve",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/supports-color",
+    "dependencyName": "supports-color",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/has-flag",
+    "dependencyName": "has-flag",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/color-convert",
+    "dependencyName": "color-convert",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/json5",
+    "dependencyName": "json5",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/src/tests/src/node_modules/@sindresorhus/is",
+    "dependencyName": "@sindresorhus/is",
+    "packageJsonFilePath": "aws-lambda-packager/src/tests/src/package.json",
+    "projectFolder": "aws-lambda-packager/src/tests/src",
+    "yarnLockFilePath": "aws-lambda-packager/src/tests/src/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/ms",
+    "dependencyName": "ms",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/chalk",
+    "dependencyName": "chalk",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/escape-string-regexp",
+    "dependencyName": "escape-string-regexp",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/ansi-styles",
+    "dependencyName": "ansi-styles",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "node_modules/color-name",
+    "dependencyName": "color-name",
+    "packageJsonFilePath": "package.json",
+    "projectFolder": "",
+    "yarnLockFilePath": "yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/path-parse",
+    "dependencyName": "path-parse",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+  Object {
+    "dependencyFolderPath": "aws-lambda-packager/node_modules/safe-buffer",
+    "dependencyName": "safe-buffer",
+    "packageJsonFilePath": "aws-lambda-packager/package.json",
+    "projectFolder": "aws-lambda-packager",
+    "yarnLockFilePath": "aws-lambda-packager/yarn.lock",
+  },
+]
+`;

@@ -24,11 +24,13 @@ const prettyPrint = ({
     `;
   }
 
-  console.log(add, update);
-
   const dependencies = getNonCyclic(graph);
-  output += `\n\n${chalk.green.bold('Run the following to deploy')}
-    ${dependencies
+  const levels = dependencies
+    .map((nodes) => nodes.filter((node) => [...add, ...update].includes(node)))
+    .filter((nodes) => nodes.length);
+  if (levels.length) {
+    output += `\n\n${chalk.green.bold('Run the following to deploy')}
+    ${levels
     .map(
       (nodes, index) =>
         `\n${chalk(`# level ${index}:`)}\n${nodes
@@ -41,11 +43,15 @@ const prettyPrint = ({
           .join(' &&\n')}`,
     )
     .join('\n\n')}
-  `;
+    `;
+  } else {
+    output += '\nNothing to deploy\n';
+  }
   if (remove.length) {
     output += `\n\n${chalk.red.bold('Delete the following resources')}
     ${chalk.bgBlack.red(
     remove
+      .filter((node) => remove.includes(node))
       .map(
         (node) =>
           `\ncd ${chalk.bold(

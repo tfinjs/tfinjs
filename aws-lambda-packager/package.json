@@ -29,12 +29,11 @@
     "adm-zip": "^0.4.13",
     "eol": "^0.9.1",
     "find-up": "^3.0.0",
-    "fs-extra": "^7.0.1",
     "lodash": "^4.17.11",
     "memory-fs": "^0.4.1",
     "resolve": "^1.9.0",
     "webpack": "^4.28.2",
     "webpack-node-externals": "^1.7.2"
   },
-  "gitHead": "5a6549cea59c693d40b0541a72ab2ee6a562d574"
+  "gitHead": "235adbd040adc229fc89457a79bb59506b58a17d"
 }

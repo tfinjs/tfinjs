@@ -199,6 +199,14 @@ class Project extends ProjectParent {
       (resource) => resource.versionedName() === versionedName,
     );
   }
+
+  async build() {
+    await Promise.all(
+      this.getResources().map(async (resource) => {
+        await resource.build();
+      }),
+    );
+  }
 }
 
 export default Project;

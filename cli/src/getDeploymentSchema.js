@@ -39,6 +39,7 @@ const getDeploymentSchema = (project, fs) => {
     }),
   );
 
+
   const { add, remove, update } = getHistoryDiff(deployedResources, resources);
   const graph = project.getDependencyGraph();
 

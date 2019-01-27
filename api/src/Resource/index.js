@@ -35,7 +35,7 @@ class Resource {
     type = requiredParam('type'),
     name = requiredParam('name'),
     body = requiredParam('body'),
-    options,
+    options = {},
   ) {
     assert(
       deploymentConfig instanceof DeploymentConfig,
@@ -53,6 +53,13 @@ class Resource {
         typeof options.dependsOn === 'undefined'
           || Array.isArray(options.dependsOn),
         'options.dependsOn must be an array',
+      );
+    }
+    if (options && options.extraHcl) {
+      assert(
+        typeof options.extraHcl === 'undefined'
+          || typeof options.extraHcl === 'function',
+        'options.extraHcl must be an array',
       );
     }
 
@@ -406,6 +413,8 @@ class Resource {
       },
     )}}`;
 
+    const extraHcl = this.options.extraHcl ? this.options.extraHcl(this) : '';
+
     this.callHooks('postSerializingHooks');
 
     return [
@@ -415,6 +424,7 @@ class Resource {
       resourceHcl,
       remoteDataSourcesHcl,
       outputs,
+      extraHcl,
     ].join('\n');
   }
 

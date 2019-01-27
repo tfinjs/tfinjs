@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`circular dependencies 1`] = `
+Object {
+  "tijpetshop1r1ghe0": Array [
+    "tijpetshop3864j5",
+  ],
+  "tijpetshop3864j5": Array [
+    "tijpetshop1r1ghe0",
+  ],
+  "tijpetshopm585e7": Array [
+    "tijpetshopsuc4qx",
+    "tijpetshop1r1ghe0",
+  ],
+  "tijpetshopsuc4qx": Array [
+    "tijpetshop3864j5",
+    "tijpetshopm585e7",
+  ],
+  "tijpetshopvj8fsk": Array [],
+}
+`;

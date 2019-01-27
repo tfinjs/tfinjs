@@ -1,10 +1,7 @@
-import { join } from 'path';
 import prettyPrint from '../prettyPrint';
-import snapshot from './snapshot';
 
 /* eslint-env jest */
 
-const getName = (id) => join(__dirname, `refs/prettyPrint.${id}.txt`);
 
 test('prettyPrint cyclic', () => {
   const output = prettyPrint(
@@ -16,7 +13,7 @@ test('prettyPrint cyclic', () => {
     },
     '/',
   );
-  snapshot(getName('cyclic'), output);
+  expect(output).toMatchSnapshot();
 });
 
 test('prettyPrint normal', () => {
@@ -29,9 +26,7 @@ test('prettyPrint normal', () => {
     },
     '/',
   );
-  // console.log(JSON.stringify(output));
-  // expect(output).toBe(normal);
-  snapshot(getName('normal'), output);
+  expect(output).toMatchSnapshot();
 });
 test('prettyPrint remove', () => {
   const output = prettyPrint(
@@ -43,9 +38,7 @@ test('prettyPrint remove', () => {
     },
     '/',
   );
-  // console.log(JSON.stringify(output));
-  // expect(output).toBe(remove);
-  snapshot(getName('remove'), output);
+  expect(output).toMatchSnapshot();
 });
 
 test('prettyPrint normal with graph', () => {
@@ -64,7 +57,5 @@ test('prettyPrint normal with graph', () => {
     },
     '/',
   );
-  // console.log(JSON.stringify(output));
-  // expect(output).toBe(normal);
-  snapshot(getName('normal-graph'), output);
+  expect(output).toMatchSnapshot();
 });

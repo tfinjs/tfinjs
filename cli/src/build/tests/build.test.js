@@ -26,12 +26,12 @@ test('project', async () => {
     remove: [],
     resources: {
       tijpetshop19qdr42: {
-        contentHash: '1o40x0m',
+        contentHash: 'tza2es',
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers',
       },
       tijpetshopmjubxt: {
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
       },
@@ -49,12 +49,12 @@ test('project', async () => {
     remove: [],
     resources: {
       tijpetshop19qdr42: {
-        contentHash: 'foe5fz',
+        contentHash: 'a87bjt',
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers',
       },
       tijpetshopmjubxt: {
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
       },
@@ -73,12 +73,12 @@ test('project', async () => {
     remove: [],
     resources: {
       tijpetshop1lr7f2m: {
-        contentHash: 'ka42wv',
+        contentHash: '1kgl8jh',
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/other_name',
       },
       tijpetshopmjubxt: {
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
       },
@@ -106,12 +106,12 @@ test('project', async () => {
     remove: [],
     resources: {
       tijpetshop1lr7f2m: {
-        contentHash: 'ka42wv',
+        contentHash: '1kgl8jh',
         uri:
           'pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/other_name',
       },
       tijpetshopmjubxt: {
-        contentHash: '1yrf1ba',
+        contentHash: '12ubbw1',
         uri:
           'pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod',
       },

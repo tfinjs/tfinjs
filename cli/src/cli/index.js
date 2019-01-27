@@ -103,8 +103,7 @@ commander
           contentWithSourceMapSupport,
           entryFile,
         );
-        await build(project, { outputFolderPath });
-        const schema = getDeploymentSchema(project, fs);
+        const schema = await build(project, { outputFolderPath });
         console.log(prettyPrint(schema, outputFolderPath));
       } catch (evalErr) {
         console.log(evalErr.stack);

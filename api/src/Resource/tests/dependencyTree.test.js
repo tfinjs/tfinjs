@@ -24,11 +24,5 @@ test('circular dependencies', async () => {
   one.updateBody('ref', reference(two, 'someattr'));
   three.updateBody('ref', reference(four, 'someattr'));
 
-  expect(project.getDependencyGraph()).toEqual({
-    tijpetshop1r1ghe0: ['tijpetshop3864j5'],
-    tijpetshop3864j5: ['tijpetshop1r1ghe0'],
-    tijpetshopm585e7: ['tijpetshopsuc4qx', 'tijpetshop1r1ghe0'],
-    tijpetshopsuc4qx: ['tijpetshop3864j5', 'tijpetshopm585e7'],
-    tijpetshopvj8fsk: [],
-  });
+  expect(project.getDependencyGraph()).toMatchSnapshot();
 });

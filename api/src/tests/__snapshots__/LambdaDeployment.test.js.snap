@@ -1,0 +1,264 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The lambda deployment example test 1`] = `
+Object {
+  "/tijpetshop1r2h0yy/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::133713371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-north-1\\"
+}
+
+terraform {
+  backend \\"s3\\" {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshop1r2h0yy.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_dynamodb_table.pets\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshop1r2h0yy')\\",
+  ]
+}
+
+resource \\"aws_dynamodb_table\\" \\"pets\\" {
+  description   = \\"pet lambda\\"
+  function_name = \\"tijpetshop1r2h0yy\\"
+  handler       = \\"service.handler\\"
+  memory_size   = 512
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+
+  role      = \\"\${data.terraform_remote_state.tijpetshopzdimna.tfinjs_arn}\\"
+  runtime   = \\"nodejs8.10\\"
+  s3_bucket = \\"pet-lambda-bucket\\"
+  s3_key    = \\"tijpetshop1r2h0yy\\"
+  timeout   = 20
+}
+
+data \\"terraform_remote_state\\" \\"tijpetshopzdimna\\" {
+  backend = \\"s3\\"
+
+  config = {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopzdimna.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+",
+  "/tijpetshop1r2h0yy/tfinjs.json": "{
+  \\"name\\": \\"tijpetshop1r2h0yy\\",
+  \\"uri\\": \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_dynamodb_table/pets\\",
+  \\"contentHash\\": \\"1bmkfe0\\",
+  \\"dependencies\\": [
+    \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_role/pets\\"
+  ]
+}",
+  "/tijpetshopf24hqc/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::133713371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-north-1\\"
+}
+
+terraform {
+  backend \\"s3\\" {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopf24hqc.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_iam_policy.cloudwatch_attachable_policy\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshopf24hqc')\\",
+  ]
+}
+
+resource \\"aws_iam_policy\\" \\"cloudwatch_attachable_policy\\" {
+  policy = <<EOF
+{\\"Version\\":\\"2012-10-17\\",\\"Statement\\":[{\\"Action\\":[\\"logs:CreateLogStream\\"],\\"Effect\\":\\"Allow\\",\\"Resource\\":\\"arn:aws:logs:eu-north-1:133713371337:log-group:/aws/lambda/tijpetshop1r2h0yy:*\\"},{\\"Action\\":[\\"logs:PutLogEvents\\"],\\"Effect\\":\\"Allow\\",\\"Resource\\":\\"arn:aws:logs:eu-north-1:133713371337:log-group:/aws/lambda/tijpetshop1r2h0yy:*:*\\"}]}
+EOF
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+}
+
+output \\"tfinjs_arn\\" {
+  value = \\"\${aws_iam_policy.cloudwatch_attachable_policy.arn}\\"
+}
+",
+  "/tijpetshopf24hqc/tfinjs.json": "{
+  \\"name\\": \\"tijpetshopf24hqc\\",
+  \\"uri\\": \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_policy/cloudwatch_attachable_policy\\",
+  \\"contentHash\\": \\"bddjyo\\",
+  \\"dependencies\\": []
+}",
+  "/tijpetshopsedgie/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::133713371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-north-1\\"
+}
+
+terraform {
+  backend \\"s3\\" {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopsedgie.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_iam_role_policy_attachment.cloud_watch_role_attachment\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshopsedgie')\\",
+  ]
+}
+
+resource \\"aws_iam_role_policy_attachment\\" \\"cloud_watch_role_attachment\\" {
+  policy_arn = \\"\${data.terraform_remote_state.tijpetshopf24hqc.tfinjs_arn}\\"
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+
+  role = \\"\${data.terraform_remote_state.tijpetshopzdimna.tfinjs_name}\\"
+}
+
+data \\"terraform_remote_state\\" \\"tijpetshopzdimna\\" {
+  backend = \\"s3\\"
+
+  config = {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopzdimna.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+
+data \\"terraform_remote_state\\" \\"tijpetshopf24hqc\\" {
+  backend = \\"s3\\"
+
+  config = {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopf24hqc.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+",
+  "/tijpetshopsedgie/tfinjs.json": "{
+  \\"name\\": \\"tijpetshopsedgie\\",
+  \\"uri\\": \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_role_policy_attachment/cloud_watch_role_attachment\\",
+  \\"contentHash\\": \\"13kqfaw\\",
+  \\"dependencies\\": [
+    \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_role/pets\\",
+    \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_policy/cloudwatch_attachable_policy\\"
+  ]
+}",
+  "/tijpetshopzdimna/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::133713371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-north-1\\"
+}
+
+terraform {
+  backend \\"s3\\" {
+    bucket = \\"terraform-state-prod\\"
+    key    = \\"tijpetshopzdimna.terraform.tfstate\\"
+    region = \\"us-east-1\\"
+  }
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_iam_role.pets\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshopzdimna')\\",
+  ]
+}
+
+resource \\"aws_iam_role\\" \\"pets\\" {
+  assume_role_policy = <<EOF
+{\\"Version\\":\\"2012-10-17\\",\\"Statement\\":[{\\"Action\\":\\"sts:AssumeRole\\",\\"Principal\\":{\\"Service\\":\\"lambda.amazonaws.com\\"},\\"Effect\\":\\"Allow\\",\\"Sid\\":\\"\\"}]}
+EOF
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+}
+
+output \\"tfinjs_arn\\" {
+  value = \\"\${aws_iam_role.pets.arn}\\"
+}
+
+output \\"tfinjs_name\\" {
+  value = \\"\${aws_iam_role.pets.name}\\"
+}
+",
+  "/tijpetshopzdimna/tfinjs.json": "{
+  \\"name\\": \\"tijpetshopzdimna\\",
+  \\"uri\\": \\"pet-shop/stage/v1/aws/133713371337/eu-north-1/services/lambdas/add-pet/aws_iam_role/pets\\",
+  \\"contentHash\\": \\"16mviph\\",
+  \\"dependencies\\": []
+}",
+}
+`;

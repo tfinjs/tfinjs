@@ -33,6 +33,14 @@ class DeploymentConfig extends DeploymentConfigParent {
     this.provider = provider;
   }
 
+  getProvider() {
+    return this.provider;
+  }
+
+  getNamespace() {
+    return this.namespace;
+  }
+
   /**
    * Gets the uri of the API.
    * Is unique based on
