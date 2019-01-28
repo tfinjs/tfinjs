@@ -1,3 +1,4 @@
+yarn run l:build
 rm -rf ./node_modules/@tfinjs/api
 rm -rf ./node_modules/@tfinjs/aws-lambda
 rm -rf ./node_modules/@tfinjs/aws-lambda-packager

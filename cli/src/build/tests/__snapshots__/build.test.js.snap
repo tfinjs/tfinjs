@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`project 1`] = `
+Object {
+  "/": null,
+  "/schema.json": "{
+  \\"resources\\": {
+    \\"tijpetshopmjubxt\\": {
+      \\"uri\\": \\"pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod\\",
+      \\"contentHash\\": \\"1jiyiui\\"
+    },
+    \\"tijpetshop19qdr42\\": {
+      \\"uri\\": \\"pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers\\",
+      \\"contentHash\\": \\"1ib4scr\\"
+    }
+  },
+  \\"add\\": [
+    \\"tijpetshop19qdr42\\",
+    \\"tijpetshopmjubxt\\"
+  ],
+  \\"remove\\": [],
+  \\"update\\": [],
+  \\"graph\\": {
+    \\"tijpetshopmjubxt\\": [],
+    \\"tijpetshop19qdr42\\": []
+  }
+}",
+  "/tijpetshop19qdr42/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::13371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-north-1\\"
+}
+
+terraform {
+  backend \\"s3\\" {
+    bucket = \\"some-backend-bucket\\"
+    key    = \\"tijpetshop19qdr42.terraform.tfstate\\"
+    region = \\"eu-central-1\\"
+  }
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_dynamodb_table.customers\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '1ib4scr')\\",
+  ]
+}
+
+resource \\"aws_dynamodb_table\\" \\"customers\\" {
+  hash_key = \\"CustomerId\\"
+  name     = \\"tijpetshop19qdr42\\"
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+
+  read_capacity  = 20
+  write_capacity = 20
+}
+",
+  "/tijpetshop19qdr42/tfinjs.json": "{
+  \\"name\\": \\"tijpetshop19qdr42\\",
+  \\"uri\\": \\"pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers\\",
+  \\"contentHash\\": \\"1ib4scr\\",
+  \\"dependencies\\": []
+}",
+  "/tijpetshopmjubxt/main.tf": "provider \\"aws\\" {
+  assume_role = {
+    role_arn = \\"arn:aws:iam::13371337:role/DeploymentRole\\"
+  }
+
+  region = \\"eu-central-1\\"
+}
+
+data \\"external\\" \\"save_latest_deploy\\" {
+  depends_on = [
+    \\"aws_s3_bucket.terraform_state_prod\\",
+  ]
+
+  program = [
+    \\"node\\",
+    \\"-e\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '1jiyiui')\\",
+  ]
+}
+
+resource \\"aws_s3_bucket\\" \\"terraform_state_prod\\" {
+  acl    = \\"private\\"
+  bucket = \\"some-backend-bucket\\"
+
+  provisioner \\"local-exec\\" {
+    command = \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'DESTROYED')\\"
+
+    interpreter = [
+      \\"node\\",
+      \\"-e\\",
+    ]
+
+    when = \\"destroy\\"
+  }
+
+  versioning = {
+    enabled = true
+  }
+}
+",
+  "/tijpetshopmjubxt/tfinjs.json": "{
+  \\"name\\": \\"tijpetshopmjubxt\\",
+  \\"uri\\": \\"pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod\\",
+  \\"contentHash\\": \\"1jiyiui\\",
+  \\"dependencies\\": []
+}",
+}
+`;
+
+exports[`project 2`] = `
+Object {
+  "add": Array [
+    "tijpetshop19qdr42",
+    "tijpetshopmjubxt",
+  ],
+  "graph": Object {
+    "tijpetshop19qdr42": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop19qdr42": Object {
+      "contentHash": "1ib4scr",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;
+
+exports[`project 3`] = `
+Object {
+  "add": Array [
+    "tijpetshop19qdr42",
+    "tijpetshopmjubxt",
+  ],
+  "graph": Object {
+    "tijpetshop19qdr42": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop19qdr42": Object {
+      "contentHash": "1ewfwc7",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;
+
+exports[`project 4`] = `
+Object {
+  "add": Array [
+    "tijpetshopmjubxt",
+  ],
+  "graph": Object {
+    "tijpetshop1lr7f2m": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop1lr7f2m": Object {
+      "contentHash": "1w62dc4",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/other_name",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;
+
+exports[`project 5`] = `
+Object {
+  "add": Array [
+    "tijpetshop1lr7f2m",
+  ],
+  "graph": Object {
+    "tijpetshop1lr7f2m": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop1lr7f2m": Object {
+      "contentHash": "1w62dc4",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/other_name",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;

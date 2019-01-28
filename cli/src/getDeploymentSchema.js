@@ -1,6 +1,9 @@
 import fromPairs from 'lodash/fromPairs';
-import { join } from 'path';
-import getHistoryDiff from './getHistoryDiff';
+import getBuiltResources, {
+  STATUS_DESTROYED,
+  STATUS_OUTDATED,
+  STATUS_UNDEPLOYED,
+} from './getBuiltResources';
 
 const getDeploymentSchema = (project, fs) => {
   /*
@@ -10,6 +13,8 @@ const getDeploymentSchema = (project, fs) => {
   */
 
   const dist = project.getDist();
+  
+  const graph = project.getDependencyGraph();
 
   const resources = fromPairs(
     project.getResources().map((resource) => [
@@ -20,32 +25,37 @@ const getDeploymentSchema = (project, fs) => {
       },
     ]),
   );
+  const currentResourceKeys = Object.keys(resources);
 
-  let previousResources = {};
-  try {
-    ({ resources: previousResources = {} } = JSON.parse(
-      fs.readFileSync(join(dist, 'latest_deploy.json')),
-    ));
-  } catch (err) {
-    /* err */
-  }
+  const builtResources = Object.entries(getBuiltResources(dist, fs));
 
-  const deployedResources = fromPairs(
-    Object.entries(previousResources).filter(([key]) => {
-      const fpath = join(dist, key, 'deployment_status.txt');
-      return (
-        fs.existsSync(fpath) && fs.readFileSync(fpath, 'utf8') !== 'DESTROYED'
-      );
-    }),
-  );
+  const m = ([a]) => a;
 
+  const add = builtResources
+    .filter(
+      ([name, { status }]) =>
+        [STATUS_UNDEPLOYED].includes(status)
+        && currentResourceKeys.includes(name),
+    )
+    .map(m);
 
-  const { add, remove, update } = getHistoryDiff(deployedResources, resources);
-  const graph = project.getDependencyGraph();
+  const update = builtResources
+    .filter(
+      ([name, { status }]) =>
+        [STATUS_OUTDATED].includes(status) && currentResourceKeys.includes(name),
+    )
+    .map(m);
+
+  const remove = builtResources
+    .filter(
+      ([name, { status }]) =>
+        ![STATUS_DESTROYED, STATUS_UNDEPLOYED].includes(status)
+        && !currentResourceKeys.includes(name),
+    )
+    .map(m);
+
 
   return {
-    previousResources,
-    deployedResources,
     resources,
     add,
     remove,

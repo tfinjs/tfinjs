@@ -2,12 +2,35 @@ import prettyPrint from '../prettyPrint';
 
 /* eslint-env jest */
 
+const resources = {
+  a: {
+    uri: 'tfinjs/a',
+    contentHash: '1',
+  },
+  b: {
+    uri: 'tfinjs/b',
+    contentHash: '2',
+  },
+  c: {
+    uri: 'tfinjs/c',
+    contentHash: '3',
+  },
+  d: {
+    uri: 'tfinjs/d',
+    contentHash: '4',
+  },
+  e: {
+    uri: 'tfinjs/e',
+    contentHash: '5',
+  },
+};
 
 test('prettyPrint cyclic', () => {
   const output = prettyPrint(
     {
-      add: ['tijpetshop1lr7f2m'],
-      graph: { tijpetshop1lr7f2m: ['tijpetshop1lr7f2m'], tijpetshopmjubxt: [] },
+      resources,
+      add: ['a'],
+      graph: { a: ['a'], b: [] },
       remove: [],
       update: [],
     },
@@ -19,8 +42,9 @@ test('prettyPrint cyclic', () => {
 test('prettyPrint normal', () => {
   const output = prettyPrint(
     {
-      add: ['tijpetshop1lr7f2m'],
-      graph: { tijpetshop1lr7f2m: [], tijpetshopmjubxt: [] },
+      resources,
+      add: ['a'],
+      graph: { a: [], b: [] },
       remove: [],
       update: [],
     },
@@ -31,9 +55,10 @@ test('prettyPrint normal', () => {
 test('prettyPrint remove', () => {
   const output = prettyPrint(
     {
-      add: ['tijpetshop1lr7f2m'],
-      graph: { tijpetshop1lr7f2m: [], tijpetshopmjubxt: [] },
-      remove: ['wefwef', 'fewfew'],
+      resources,
+      add: ['a'],
+      graph: { a: [], b: [] },
+      remove: ['c', 'd'],
       update: [],
     },
     '/',
@@ -44,6 +69,7 @@ test('prettyPrint remove', () => {
 test('prettyPrint normal with graph', () => {
   const output = prettyPrint(
     {
+      resources,
       add: ['a', 'b', 'c', 'd'],
       graph: {
         a: ['b'],

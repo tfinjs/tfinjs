@@ -1,94 +1,23 @@
 /* eslint-env jest */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Volume, createFsFromVolume } from 'memfs';
 import { resolve } from 'path';
-import {
-  Backend,
-  Provider,
-  Resource,
-  Project,
-  Namespace,
-  DeploymentConfig,
-  providerUris,
-} from '@tfinjs/api';
 import packager from '@tfinjs/aws-lambda-packager';
 import LambdaResource from '..';
+import makeProject from './mocks/project';
 
-const vol = new Volume();
-const fs = createFsFromVolume(vol);
-
-test('index', async () => {
-  const backendBucketName = 'some-backend-bucket';
-  const backendBucketRegion = 'eu-north-1';
-  const awsAccoundId = '13371337';
-
-  const backend = new Backend('s3', {
-    backendConfig: (name) => ({
-      bucket: backendBucketName,
-      key: `${name}.terraform.tfstate`,
-      region: backendBucketRegion,
-    }),
-    dataConfig: (name) => ({
-      bucket: backendBucketName,
-      key: `${name}.terraform.tfstate`,
-      region: backendBucketRegion,
-    }),
-    provider: new Provider(
-      'aws',
-      {
-        region: backendBucketRegion,
-        assume_role: {
-          role_arn: `arn:aws:iam::${awsAccoundId}:role/DeploymentRole`,
-        },
-      },
-      providerUris.aws(awsAccoundId, backendBucketRegion),
-    ),
-    create: (deploymentConfig) =>
-      new Resource(deploymentConfig, 'aws_s3_bucket', 'terraform_state_prod', {
-        bucket: backendBucketName,
-        acl: 'private',
-        versioning: {
-          enabled: true,
-        },
-      }),
-  });
-
-  const project = new Project('pet-shop', backend, '/', fs);
-
-  const namespace = new Namespace(project, 'customers');
-
-  const deploymentConfig = new DeploymentConfig(namespace, {
-    environment: 'prod',
-    version: 'static',
-    provider: new Provider(
-      'aws',
-      {
-        region: 'eu-north-1',
-        assume_role: {
-          role_arn: `arn:aws:iam::${awsAccoundId}:role/DeploymentRole`,
-        },
-      },
-      providerUris.aws(awsAccoundId, 'eu-north-1'),
-    ),
-  });
-  const lambdaDeploymentBucket = new Resource(
+test('package', async () => {
+  const {
+    project,
+    vol,
     deploymentConfig,
-    'aws_s3_bucket',
-    'terraform_state_prod',
-    {
-      bucket: 'lambda-deployment-bucket',
-      acl: 'private',
-      versioning: {
-        enabled: true,
-      },
-    },
-  );
-
+    lambdaDeploymentBucket,
+    fs,
+  } = makeProject();
   const { zipUpload } = new LambdaResource(
     deploymentConfig,
     'petLambdas',
     {
-      // cloudwatch: true,
+      cloudwatch: false,
       // apigw: {
       //   enabled: true,
       //   cors: true,
@@ -111,11 +40,38 @@ test('index', async () => {
     fs,
   );
 
-  await Promise.all(
-    project.getResources().map(async (resource) => {
-      await resource.build();
-    }),
+  await project.build();
+  expect(project.getDependencyGraph()).toMatchSnapshot();
+  const snapshot = vol.toJSON();
+  const zipPath = `/${zipUpload.versionedName()}/aws_lambda_package.zip`;
+  snapshot[zipPath] = 'the zip file';
+
+  expect(snapshot).toMatchSnapshot();
+});
+
+test('with cloudwatch', async () => {
+  const {
+    project,
+    vol,
+    deploymentConfig,
+    lambdaDeploymentBucket,
+    fs,
+  } = makeProject();
+
+  const { zipUpload } = new LambdaResource(
+    deploymentConfig,
+    'petLambdas',
+    {
+      cloudwatch: true,
+      lambdaDeploymentBucket,
+      package: async (zipFilePath) => {
+        await packager(resolve(__dirname, 'service.js'), zipFilePath, fs);
+      },
+    },
+    fs,
   );
+
+  await project.build();
   expect(project.getDependencyGraph()).toMatchSnapshot();
   const snapshot = vol.toJSON();
   const zipPath = `/${zipUpload.versionedName()}/aws_lambda_package.zip`;

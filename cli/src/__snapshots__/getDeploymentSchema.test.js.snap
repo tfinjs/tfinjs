@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getDeploymentSchema  1`] = `
+Object {
+  "add": Array [],
+  "graph": Object {
+    "tijpetshop19qdr42": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop19qdr42": Object {
+      "contentHash": "1ib4scr",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;
+
+exports[`getDeploymentSchema 1`] = `
+Object {
+  "add": Array [],
+  "graph": Object {
+    "tijpetshop19qdr42": Array [],
+    "tijpetshopmjubxt": Array [],
+  },
+  "remove": Array [],
+  "resources": Object {
+    "tijpetshop19qdr42": Object {
+      "contentHash": "1ib4scr",
+      "uri": "pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers",
+    },
+    "tijpetshopmjubxt": Object {
+      "contentHash": "1jiyiui",
+      "uri": "pet-shop/_/_/aws/13371337/eu-central-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod",
+    },
+  },
+  "update": Array [],
+}
+`;

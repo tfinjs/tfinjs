@@ -8,6 +8,7 @@ import {
   Resource,
   DeploymentConfig,
 } from '@tfinjs/api';
+import withCloudwatch from './withCloudwatch';
 
 const relativeZipFilePath = './aws_lambda_package.zip';
 
@@ -34,7 +35,7 @@ class LambdaResource {
 
     this.setFs(fileSystem);
 
-    const role = new Resource(deploymentConfig, 'aws_iam_role', name, {
+    const lambdaRole = new Resource(deploymentConfig, 'aws_iam_role', name, {
       assume_role_policy: JSON.stringify({
         Version: '2012-10-17',
         Statement: [
@@ -67,9 +68,7 @@ class LambdaResource {
       mkdirp.sync(outputFolder, {
         fs: this.fs,
       });
-      await packageFunction(
-        join(outputFolder, relativeZipFilePath),
-      );
+      await packageFunction(join(outputFolder, relativeZipFilePath));
     });
 
     const lambda = new Resource(
@@ -88,7 +87,7 @@ class LambdaResource {
         timeout,
         memory_size: memorySize,
 
-        role: reference(role, 'arn'),
+        role: reference(lambdaRole, 'arn'),
 
         description: `tfinjs-aws-lambda/${name}`,
       },
@@ -97,61 +96,20 @@ class LambdaResource {
       },
     );
 
+    let cloudwatchResources = {};
     if (cloudwatch) {
-      const lambdaCloudwatchGroup = new Resource(
+      cloudwatchResources = withCloudwatch(
         deploymentConfig,
-        'aws_cloudwatch_log_group',
-        'lambda_cloudwatch_group',
-        {
-          name: `/aws/lambda/${lambda.versionedName()}`,
-        },
-      );
-      deploymentConfig.getProvider();
-      const prefix = [
-        'arn:aws:logs',
-        '${data.aws_region.current.name}',
-        '${data.aws_caller_identity.current.account_id}',
-        'log-group',
-        `/aws/lambda/${lambda.versionedName()}`,
-      ].join(':');
-      const cloudwatchAttachablePolicy = new Resource(
-        deploymentConfig,
-        'aws_iam_policy',
-        'cloudwatch_attachable_policy',
-        {
-          policy: JSON.stringify(
-            {
-              Version: '2012-10-17',
-              Statement: [
-                {
-                  Action: ['logs:CreateLogStream'],
-                  Effect: 'Allow',
-                  Resource: `${prefix}:*`,
-                },
-                {
-                  Action: ['logs:PutLogEvents'],
-                  Effect: 'Allow',
-                  Resource: `${prefix}:*:*`,
-                },
-              ],
-            },
-            null,
-            2,
-          ),
-        },
-        {
-          extraHcl: () => `
-            data "aws_region" "current" {}
-            data "aws_caller_identity" "current" {}
-          `,
-        },
+        lambda,
+        lambdaRole,
       );
     }
 
     return {
       lambda,
       zipUpload,
-      role,
+      lambdaRole,
+      ...cloudwatchResources,
     };
   }
 

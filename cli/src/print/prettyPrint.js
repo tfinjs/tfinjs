@@ -1,16 +1,17 @@
+import { getCyclic, getNonCyclic } from '@tfinjs/dependency-graph';
+import assert from 'assert';
+import chalk from 'chalk';
 import figures from 'figures';
 import { join } from 'path';
-import chalk from 'chalk';
-import {
-  getCyclic,
-  getDependenciesOfNode,
-  getInversedDependenciesOfNode,
-  getNonCyclic,
-} from '@tfinjs/dependency-graph';
 
 const prettyPrint = ({
-  add, graph, remove, update,
+  add, graph, remove, update, resources,
 }, dist) => {
+  assert(Array.isArray(add), 'add must be an array');
+  assert(Array.isArray(remove), 'remove must be an array');
+  assert(Array.isArray(update), 'update must be an array');
+  assert(typeof graph === 'object', 'object must be an object');
+
   const getDir = (d) => join(dist, d);
   let output = '';
   const cyclic = getCyclic(graph);
@@ -19,24 +20,32 @@ const prettyPrint = ({
       (nodes) => `${figures.bullet} ${nodes.join(', ')}`,
     );
     output += `
-      ${chalk.red.bold('Warning, you have circular dependencies!')}\n
-      ${chalk.red(content)}
+      ${chalk.yellow.bold(
+    `${figures.warning} Warning, you have circular dependencies!`,
+  )}\n
+      ${chalk.yellow(content)}
     `;
   }
 
   const dependencies = getNonCyclic(graph);
+
   const levels = dependencies
     .map((nodes) => nodes.filter((node) => [...add, ...update].includes(node)))
     .filter((nodes) => nodes.length);
+
   if (levels.length) {
-    output += `\n\n${chalk.green.bold('Run the following to deploy')}
+    output += `\n\n${chalk.green.bold(
+      `${figures.info} Run the following to deploy`,
+    )}
     ${levels
     .map(
       (nodes, index) =>
-        `\n${chalk(`# level ${index}:`)}\n${nodes
+        `\n${chalk(`# ${figures.pointer} level ${index}:`)}\n${nodes
           .map((node) =>
             chalk.bgBlack.green(
-              `\ncd ${chalk.bold(
+              `\n#${resources[node].uri}@${
+                resources[node].contentHash
+              }\ncd ${chalk.bold(
                 getDir(node),
               )} && tf init && tf apply -auto-approve`,
             ))

@@ -1110,14 +1110,14 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tfinjs/api@^0.2.2", "@tfinjs/api@file:api":
-  version "0.2.2"
+"@tfinjs/api@^0.2.3", "@tfinjs/api@file:api":
+  version "0.2.3"
   dependencies:
     lodash "^4.17.11"
     mkdirp "^0.5.1"
 
 "@tfinjs/aws-lambda-packager@file:./aws-lambda-packager":
-  version "0.2.2"
+  version "0.2.3"
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     adm-zip "^0.4.13"
@@ -1130,15 +1130,15 @@
     webpack-node-externals "^1.7.2"
 
 "@tfinjs/aws-lambda@file:./aws-lambda":
-  version "0.2.2"
+  version "0.2.3"
   dependencies:
-    "@tfinjs/api" "^0.2.2"
+    "@tfinjs/api" "^0.2.3"
     mkdirp "^0.5.1"
 
 "@tfinjs/cli@file:./cli":
-  version "0.2.2"
+  version "0.2.3"
   dependencies:
-    "@tfinjs/api" "^0.2.2"
+    "@tfinjs/api" "^0.2.3"
     "@tfinjs/dependency-graph" "^0.0.2-beta"
     chalk "^2.4.2"
     commander "^2.19.0"
@@ -5137,9 +5137,10 @@ mem@^4.0.0:
     mimic-fn "^1.0.0"
     p-is-promise "^1.1.0"
 
-memfs@^2.14.2:
-  version "2.14.2"
-  resolved "https://registry.yarnpkg.com/memfs/-/memfs-2.14.2.tgz#c927a70e98588b7b803ccc326beeffe701bc57d3"
+memfs@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/memfs/-/memfs-2.15.0.tgz#4bfc714bf95ea2e473354847d501e38ee41b462f"
+  integrity sha512-vktLqfHB1K4I9oiWlG4VjbztEreU5LqgnTnlVimr4bKNhJwjTmKg5+eYIimmNiKVUolTUrWSy2k/KEyqqLqZrQ==
   dependencies:
     fast-extend "0.0.2"
     fs-monkey "^0.3.3"

@@ -368,7 +368,7 @@ class Resource {
    * @returns {hcl} hcl - hcl
    * @memberof Resource
    */
-  getHcl() {
+  getHcl(calculatingHash = false) {
     this.callHooks('preSerializingHooks');
 
     const converter = new JsToHcl();
@@ -402,13 +402,18 @@ class Resource {
       this.versionedName(),
     );
 
+    let hash = 'hash';
+    if (!calculatingHash) {
+      hash = this.getContentHash();
+    }
+
     const dataHcl = `data "external" "save_latest_deploy" {${converter.stringify(
       {
         depends_on: [`${this.type}.${this.name}`],
         program: [
           'node',
           '-e',
-          `require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '${this.versionedName()}')`,
+          `require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '${hash}')`,
         ],
       },
     )}}`;
@@ -417,7 +422,7 @@ class Resource {
 
     this.callHooks('postSerializingHooks');
 
-    return [
+    return `${[
       providerHcl,
       backendHcl,
       dataHcl,
@@ -425,7 +430,7 @@ class Resource {
       remoteDataSourcesHcl,
       outputs,
       extraHcl,
-    ].join('\n');
+    ].join('\n')}\n`;
   }
 
   getOutputFolder() {
@@ -465,7 +470,7 @@ class Resource {
   }
 
   contentHashSeeds = {
-    hcl: (r) => r.getHcl(),
+    hcl: (r) => r.getHcl(true),
   };
 
   getContentHashSeeds() {

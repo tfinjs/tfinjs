@@ -16,22 +16,13 @@ const build = async (project, { outputFolderPath, fs = defaultFsModule }) => {
     fs,
   });
 
-
   /* build */
-  const resources = project.getResources();
-
+  await project.build();
   const schema = getDeploymentSchema(project, fs);
 
   fs.writeFileSync(
-    join(outputFolderPath, 'latest_deploy.json'),
+    join(outputFolderPath, 'schema.json'),
     JSON.stringify(schema, null, 2),
-  );
-
-
-  await Promise.all(
-    resources.map(async (resource) => {
-      await resource.build();
-    }),
   );
   return schema;
 };

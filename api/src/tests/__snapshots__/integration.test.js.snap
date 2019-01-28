@@ -26,7 +26,7 @@ data \\"external\\" \\"save_latest_deploy\\" {
   program = [
     \\"node\\",
     \\"-e\\",
-    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshop19qdr42')\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '147jd9c')\\",
   ]
 }
 
@@ -52,7 +52,7 @@ resource \\"aws_dynamodb_table\\" \\"customers\\" {
   "/tijpetshop19qdr42/tfinjs.json": "{
   \\"name\\": \\"tijpetshop19qdr42\\",
   \\"uri\\": \\"pet-shop/prod/static/aws/13371337/eu-north-1/customers/aws_dynamodb_table/customers\\",
-  \\"contentHash\\": \\"px3wf3\\",
+  \\"contentHash\\": \\"147jd9c\\",
   \\"dependencies\\": []
 }",
   "/tijpetshopjr2h4y/main.tf": "provider \\"aws\\" {
@@ -71,7 +71,7 @@ data \\"external\\" \\"save_latest_deploy\\" {
   program = [
     \\"node\\",
     \\"-e\\",
-    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', 'tijpetshopjr2h4y')\\",
+    \\"require('@tfinjs/api').utils.saveDeploymentStatus('\${path.root}', '11wl3qr')\\",
   ]
 }
 
@@ -98,7 +98,7 @@ resource \\"aws_s3_bucket\\" \\"terraform_state_prod\\" {
   "/tijpetshopjr2h4y/tfinjs.json": "{
   \\"name\\": \\"tijpetshopjr2h4y\\",
   \\"uri\\": \\"pet-shop/_/_/aws/13371337/eu-north-1/__tfinjs__backend__/aws_s3_bucket/terraform_state_prod\\",
-  \\"contentHash\\": \\"t2zgrk\\",
+  \\"contentHash\\": \\"11wl3qr\\",
   \\"dependencies\\": []
 }",
 }

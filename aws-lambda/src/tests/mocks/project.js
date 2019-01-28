@@ -1,4 +1,4 @@
-/* eslint-env jest */
+/* eslint-disable import/no-extraneous-dependencies */
 import { Volume, createFsFromVolume } from 'memfs';
 import {
   Backend,
@@ -7,7 +7,6 @@ import {
   Project,
   Namespace,
   DeploymentConfig,
-  versionedName,
   providerUris,
 } from '@tfinjs/api';
 
@@ -16,7 +15,7 @@ export default () => {
   const fs = createFsFromVolume(vol);
 
   const backendBucketName = 'some-backend-bucket';
-  const backendBucketRegion = 'eu-central-1';
+  const backendBucketRegion = 'eu-north-1';
   const awsAccoundId = '13371337';
 
   const backend = new Backend('s3', {
@@ -54,7 +53,7 @@ export default () => {
 
   const namespace = new Namespace(project, 'customers');
 
-  const staticConfig = new DeploymentConfig(namespace, {
+  const deploymentConfig = new DeploymentConfig(namespace, {
     environment: 'prod',
     version: 'static',
     provider: new Provider(
@@ -68,18 +67,24 @@ export default () => {
       providerUris.aws(awsAccoundId, 'eu-north-1'),
     ),
   });
-
-  const table = new Resource(staticConfig, 'aws_dynamodb_table', 'customers', {
-    name: versionedName(),
-    read_capacity: 20,
-    write_capacity: 20,
-    hash_key: 'CustomerId',
-  });
+  const lambdaDeploymentBucket = new Resource(
+    deploymentConfig,
+    'aws_s3_bucket',
+    'terraform_state_prod',
+    {
+      bucket: 'lambda-deployment-bucket',
+      acl: 'private',
+      versioning: {
+        enabled: true,
+      },
+    },
+  );
 
   return {
-    table,
-    project,
     vol,
     fs,
+    project,
+    deploymentConfig,
+    lambdaDeploymentBucket,
   };
 };
