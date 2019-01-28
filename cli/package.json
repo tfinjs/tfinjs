@@ -1,6 +1,6 @@
 {
   "name": "@tfinjs/cli",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://tfinjs.com",
   "dependencies": {
-    "@tfinjs/api": "^0.2.3",
+    "@tfinjs/api": "^0.2.4",
     "@tfinjs/dependency-graph": "^0.0.2-beta",
     "chalk": "^2.4.2",
     "commander": "^2.19.0",
