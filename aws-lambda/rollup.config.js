@@ -16,6 +16,7 @@ export default {
   ],
   external: (p) => {
     const deps = [
+      '@tfinjs/api',
       'mkdirp',
       'path',
       'assert',
